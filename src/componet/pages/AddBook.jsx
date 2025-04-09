@@ -107,7 +107,9 @@ const AddBook = () => {
         // }
 
         try {
-            const response = await postApiData(`${process.env.REACT_APP_BASE_URL}/api/book`, data);
+            const response = await postApiData(`${process.env.REACT_APP_BASE_URL}/api/book`, data, {
+                'Content-Type': 'multipart/form-data',
+            });
 
             // const response = await postApiData(`${process.env.REACT_APP_BASE_URL}/book`, data, {
             //     withCredentials: true,

@@ -39,13 +39,14 @@ export const postApiImageData = (url, formData, config = {}) => {
     }
 };
 
-export const postApiData = (url, data, config = {}) => {
+export const postApiData = (url, data, headers, config = {}) => {
 
     if (url) {
         return new Promise((resolve, reject) => {
             axios.post(url, data, {
                 headers: {
                     'Content-Type': 'application/json',
+                    ...headers
                 },
                 ...config
             })
