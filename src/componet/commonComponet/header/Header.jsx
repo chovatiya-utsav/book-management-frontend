@@ -28,7 +28,7 @@ const Header = () => {
 
     const getUserData = async (token) => {
         try {
-            const res = await postApiData("http://localhost:5000/api/user", { token })
+            const res = await postApiData(`${process.env.REACT_APP_BASE_URL}/api/user`, { token })
 
             if (res && res?.status === 200) {
                 setUser({
