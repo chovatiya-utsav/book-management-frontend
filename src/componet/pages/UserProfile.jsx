@@ -66,7 +66,7 @@ const UserProfile = () => {
 
     const getUserData = async () => {
         try {
-            const res = await postApiData("http://localhost:5000/api/user", { token })
+            const res = await postApiData(`${process.env.REACT_APP_BASE_URL}/api/user`, { token })
 
             if (res && res?.status === 200) {
                 setProfile({
