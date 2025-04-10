@@ -423,6 +423,7 @@ textarea::-webkit-scrollbar-track {
   .modal-overlay .modal-content .book-info .book-content {
     flex-direction: row;
     width: 100%;
+    align-items: center;
   }
 
   .modal-overlay .modal-content .book-info .book-content .author-detail {
