@@ -283,7 +283,7 @@ const UserProfile = () => {
         setLoading(true);
 
         const formData = {
-            profileImage: file,
+            profile_image: file,
             user_token: token
         }
 
