@@ -130,8 +130,10 @@ const BookReviewModal = ({ show, onClose, book, userReview, readLater, user, del
                         </div>
                         <div className="book-info">
                             <div className="book-content">
-                                <h2 className="modal-book-title">{book.book_name}</h2>
-                                <p className="modal-author">By {book.author_name}</p>
+                                <div className='author-detail'>
+                                    <h2 className="modal-book-title">{book.book_name}</h2>
+                                    <p className="modal-author">By {book.author_name}</p>
+                                </div>
                                 {user && <p>Published Year: {book.published_year}</p>}
                                 <div className="star-rating">
                                     <div className="rating">

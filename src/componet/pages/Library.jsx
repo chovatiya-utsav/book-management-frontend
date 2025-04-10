@@ -48,13 +48,13 @@ const Library = () => {
     };
 
 
-    const uniqueAuthors = [...new Set(bookData.map(book => book.author))];
+    const uniqueAuthors = [...new Set(bookData.map(book => book.author_name))];
 
     const filterBooks = () => {
         let result = [...bookData];
 
         if (selectedAuthor) {
-            result = result.filter(book => book.author === selectedAuthor);
+            result = result.filter(book => book.author_name === selectedAuthor);
         }
 
         if (searchText) {

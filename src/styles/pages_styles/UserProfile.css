@@ -401,7 +401,7 @@
 }
 
 
-.user-profile-container .nav-link {
+.user-profile-container .profile-nav-link {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -411,6 +411,59 @@
   padding: 0px 20px;
 }
 
-.user-profile-container .nav-link ul {
+.user-profile-container .profile-nav-link ul {
   list-style-type: none;
+  display: flex;
+  gap: 20px;
+}
+
+.user-profile-container .profile-nav-link ul li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.user-profile-container .profile-nav-link ul li a:hover {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+.user-profile-container .profile-nav-link ul li a:focus {
+  color: #fff;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+@media only screen and (max-width: 700px) {
+  .book-Container .book-card {
+    width: 200px;
+    height: 300px;
+  }
+
+  .book-Container {
+    gap: 30px;
+    padding: 20px 0px;
+  }
+
+  .book-Container .book-card .book-reting .book-title {
+    font-size: 0.8rem;
+    font-size: 0.8rem;
+    margin: 0;
+    padding: 0;
+    height: 36px;
+  }
+
+  .book-Container .book-card .book-info {
+    padding: 10px;
+  }
+
+  .book-Container .book-card .book-info .book-reting .star-wrapper {
+    font-size: 21px;
+    margin: 0px;
+    width: 21px;
+  }
+
+  .book-Container .book-card .book-info .book-reting .rating-box {
+    flex: 0 1;
+  }
 }

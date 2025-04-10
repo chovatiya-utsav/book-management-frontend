@@ -386,10 +386,10 @@ const UserProfile = () => {
                 )}
 
             </div>
-            <div className="nav-link">
+            <div className="profile-nav-link">
                 <ul>
                     {/* Use normal anchor links instead of NavLink for internal page navigation */}
-                    <li> <a href="#my-Book">My Book</a> </li>
+                    <li> <a href="#my-Book" className="nav">My Book</a> </li>
                     <li> <a href="#read-later">Read Later Book</a> </li>
                 </ul>
             </div>

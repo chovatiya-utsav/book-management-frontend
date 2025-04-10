@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router';
 import useApiUrl from '../useApiUrl';
 import "../../../styles/Header.css";
-import { getApiData, postApiData, putApiUserProfileUpdate } from '../../../config';
+import { postApiData } from '../../../config';
 
 const Header = () => {
     const baseurl = useApiUrl();
@@ -15,7 +15,8 @@ const Header = () => {
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
     const [successMessage, setSuccessMessage] = useState(false);
-    const [confirmLogout, setConfirmLogout] = useState(false)
+    const [confirmLogout, setConfirmLogout] = useState(false);
+    const [menuOpen, setMenuOpen] = useState(false);
 
     const [user, setUser] = useState(null);
     const token = localStorage?.getItem('token');
@@ -210,19 +211,22 @@ const Header = () => {
                     </ul>
                 </div>
 
-                <div className='nav-link'>
+                <div className='menu-icon' onClick={() => setMenuOpen(!menuOpen)}>
+                    ☰
+                </div>
+                <div className={`nav-link ${menuOpen ? "show" : ""}`} >
                     <ul>
-                        <li><NavLink to={"/Home"}>Home</NavLink></li>
-                        <li><NavLink to={"/library"}>Library</NavLink></li>
-                        <li><NavLink to={"/BookDisplay"}>Books</NavLink></li>
-                        <li><NavLink to={"/AddBook"}>AddBook</NavLink></li>
+                        <li><NavLink to={"/Home"} onClick={() => setMenuOpen(false)}>Home</NavLink></li>
+                        <li><NavLink to={"/library"} onClick={() => setMenuOpen(false)}>Library</NavLink></li>
+                        <li><NavLink to={"/BookDisplay"} onClick={() => setMenuOpen(false)}>Books</NavLink></li>
+                        <li><NavLink to={"/AddBook"} onClick={() => setMenuOpen(false)}>AddBook</NavLink></li>
                         {localStorage?.getItem("userUpdateBookData") &&
-                            (<li><NavLink to={"/UpdateBook"}>UpdateBook</NavLink></li>)
+                            (<li><NavLink to={"/UpdateBook"} onClick={() => setMenuOpen(false)}>UpdateBook</NavLink></li>)
                         }
 
 
                         {location.pathname === "/UserProfile" && !userAdminLogin ?
-                            <li > <NavLink to={"/UserProfile"}>Profile</NavLink></li>
+                            <li > <NavLink to={"/UserProfile"} onClick={() => setMenuOpen(false)}>Profile</NavLink></li>
                             : null}
 
 
