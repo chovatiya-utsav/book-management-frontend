@@ -5,8 +5,7 @@ import "../../styles/pages_styles/UserProfile.css";
 import useApiUrl from "../commonComponet/useApiUrl";
 import Loader from "../commonComponet/Loader"
 import BookReviewModal from "../commonComponet/BookReviewModal";
-import { deleteApiData, getApiData, postApiData, postApiImageData, putApiUserProfileUpdate } from "../../config";
-import { data, NavLink } from "react-router";
+import { deleteApiData, getApiData, postApiData } from "../../config";
 
 const validationSchema = Yup.object().shape({
     user_name: Yup.string()
@@ -62,7 +61,7 @@ const UserProfile = () => {
             fetchBooks(profile.id);
             fetchReadLaterBook();
         }
-    }, [profile.id,!successMessage]);
+    }, [profile.id, !successMessage]);
 
     const getUserData = async () => {
         try {
@@ -178,7 +177,9 @@ const UserProfile = () => {
 
         try {
 
-            const res = await postApiData(`${process.env.REACT_APP_BASE_URL}/api/user/updateUserDetail`, userData);
+            const res = await postApiData(`${process.env.REACT_APP_BASE_URL}/api/user/updateUserDetail`, userData, {
+                'Content-Type': 'multipart/form-data',
+            });
 
             if (res && res.status === 200) {
                 setLoading(false)
@@ -289,7 +290,7 @@ const UserProfile = () => {
         }
 
         try {
-            const res = await postApiImageData(`${process.env.REACT_APP_BASE_URL}/api/user/updateUserDetail`, formData,)
+            const res = await postApiData(`${process.env.REACT_APP_BASE_URL}/api/user/updateUserDetail`, formData,)
 
             setLoading(false)
             if (res && res.status === 200) {
