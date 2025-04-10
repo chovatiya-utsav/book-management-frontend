@@ -177,9 +177,7 @@ const UserProfile = () => {
 
         try {
 
-            const res = await postApiData(`${process.env.REACT_APP_BASE_URL}/api/user/updateUserDetail`, userData, {
-                'Content-Type': 'multipart/form-data',
-            });
+            const res = await postApiData(`${process.env.REACT_APP_BASE_URL}/api/user/updateUserDetail`, userData);
 
             if (res && res.status === 200) {
                 setLoading(false)
@@ -290,7 +288,9 @@ const UserProfile = () => {
         }
 
         try {
-            const res = await postApiData(`${process.env.REACT_APP_BASE_URL}/api/user/updateUserDetail`, formData,)
+            const res = await postApiData(`${process.env.REACT_APP_BASE_URL}/api/user/updateUserDetail`, formData, {
+                'Content-Type': 'multipart/form-data',
+            })
 
             setLoading(false)
             if (res && res.status === 200) {
