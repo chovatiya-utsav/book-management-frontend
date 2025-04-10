@@ -402,19 +402,22 @@
 
 
 .user-profile-container .profile-nav-link {
-  display: flex;
   align-items: center;
-  justify-content: flex-start;
-  background: #333;
-  margin: 20px 0px;
+  display: flex;
   height: 45px;
-  padding: 0px 20px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
 }
 
 .user-profile-container .profile-nav-link ul {
-  list-style-type: none;
   display: flex;
   gap: 20px;
+  list-style-type: none;
+  flex-wrap: wrap;
+  background: #333;
+  padding: 10px;
+  margin: 0;
+  width: 100%;
 }
 
 .user-profile-container .profile-nav-link ul li a {
