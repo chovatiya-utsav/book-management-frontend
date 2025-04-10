@@ -3,14 +3,12 @@ import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import confetti from 'canvas-confetti';
 import '../../styles/pages_styles/AddBook.css';
-import useApiUrl from '../commonComponet/useApiUrl';
 import { Player } from '@lottiefiles/react-lottie-player';
-import { getApiData, postApiImageData, putApiData } from '../../config';
+import { getApiData, postApiImageData } from '../../config';
 import { useLocation, useNavigate } from 'react-router';
 import Loader from '../commonComponet/Loader';
 
 const UpdateBook = () => {
-    const baseUrl = useApiUrl();
     const location = useLocation();
     const navigate = useNavigate();
 
@@ -216,7 +214,7 @@ const UpdateBook = () => {
                             </div>
 
                             <div className="form-group">
-                                <label>author_name</label>
+                                <label>author name</label>
                                 <Field type="text" name="author_name" placeholder="Enter author_name name" />
                                 <ErrorMessage name="author_name" component="div" className="error" />
                             </div>
@@ -227,7 +225,7 @@ const UpdateBook = () => {
                             </div>
 
                             <div className="form-group">
-                                <label>book_type</label>
+                                <label>book type</label>
                                 <Field type="text" name="book_type" placeholder="Enter book_type (e.g. Fiction)" />
                                 <ErrorMessage name="book_type" component="div" className="error" />
                             </div>

@@ -184,7 +184,7 @@ const AddBook = () => {
                             </div>
 
                             <div className="form-group">
-                                <label>Author</label>
+                                <label>author name</label>
                                 <Field type="text" name="author" placeholder="Enter author name" />
                                 <ErrorMessage name="author" component="div" className="error" />
                             </div>
@@ -195,7 +195,7 @@ const AddBook = () => {
                             </div>
 
                             <div className="form-group">
-                                <label>Genre</label>
+                                <label>book type</label>
                                 <Field type="text" name="genre" placeholder="Enter genre (e.g. Fiction)" />
                                 <ErrorMessage name="genre" component="div" className="error" />
                             </div>
