@@ -124,8 +124,8 @@ const Home = () => {
                     <h1>
                         Welcome to our online book store<br />
                         <div className="typing-container">
-                            <div className="text text-1">Designed and developed by Utsav, Vishesh, and Manan</div>
-                            <div className="text text-2">Created by Manan, Utsav, and Vishesh</div>
+                            <div className="text text-1">Designed and developed by Utsav</div>
+                            <div className="text text-2">Created by Utsav</div>
                         </div>
                     </h1>
                 </div>
