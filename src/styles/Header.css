@@ -397,6 +397,6 @@
 
 @media only screen and (max-width: 480px) {
     .header .profile-modal .profile-content {
-        max-width: 350px;
+        max-width: 300px;
     }
 }

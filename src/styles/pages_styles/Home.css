@@ -207,3 +207,11 @@
         width: 0ch;
     }
 }
+
+@media only screen and (max-width: 480px) {
+    .typing-container {
+
+        height: 15px;
+        font-size: 10px;
+    }
+}

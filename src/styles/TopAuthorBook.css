@@ -392,7 +392,7 @@
 
 
     .book-slider-container {
-        height: 88vh;
+        height: 120vh !important;
     }
 
     .book-slider-container .book-slider {
@@ -416,7 +416,7 @@
     .book-slider-container .book-slider .slides.deactive {
         width: 47%;
         height: 220px;
-        top: 70%;
+        top: 65%;
         transform: translateY(0);
         animation: slideUpMobile 0.6s ease forwards;
     }
@@ -490,4 +490,7 @@
     }
 
 
+    .book-slider-container .book-slider .slides .content .author-info img {
+        margin-bottom: 10px;
+    }
 }
