@@ -40,7 +40,8 @@
     position: fixed;
     top: 0;
     right: -400px;
-    width: 400px;
+    width: 100%;
+    max-width: 400px;
     height: 100vh;
     background-color: #fff;
     box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
@@ -197,5 +198,16 @@
     to {
         opacity: 1;
         transform: scale(1);
+    }
+}
+
+@media only screen and (max-width: 448px) {
+
+    .comments-modal {
+        max-width: 300px;
+    }
+
+    .user-Book-read .modal-backdrop{
+        width: calc(100vw - 300px);
     }
 }

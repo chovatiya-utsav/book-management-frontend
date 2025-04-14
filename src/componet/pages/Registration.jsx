@@ -405,6 +405,9 @@ const Registration = () => {
                             </div>
 
                             <div className="button">
+                                <button type="button" onClick={() => navigate(`/Login`)}>
+                                    Login
+                                </button>
                                 <button type="submit" disabled={isSubmitting}>
                                     {isSubmitting ? "Submitting..." : "Register"}
                                 </button>
