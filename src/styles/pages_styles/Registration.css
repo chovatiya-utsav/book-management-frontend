@@ -385,3 +385,141 @@
         z-index: 2;
     }
 }
+
+
+.registration-form-moblie {
+    display: none;
+    background: linear-gradient(135deg, #e0f7fa, #fff);
+    width: 100%;
+    max-width: 500px;
+    background-color: #ffffff;
+    padding: 20px 15px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* Heading */
+.form-heading {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.form-heading h1 {
+    font-size: 22px;
+    color: #2c3e50;
+}
+
+/* Input Fields */
+.input-field {
+    margin-bottom: 18px;
+}
+
+.input-field label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 14px;
+    color: #333;
+    font-weight: 500;
+}
+
+.input-field input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f9f9f9;
+    transition: border 0.2s ease;
+}
+
+.input-field input:focus {
+    border-color: #4caf50;
+    outline: none;
+    background-color: #fff;
+}
+
+.input-field .error {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* Submit Button */
+.registration-form-moblie .button {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.registration-form-moblie .button button {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 15px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+.registration-form-moblie .button button:hover {
+    background-color: #45a049;
+}
+
+.registration-form-moblie .button button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+/* Loader */
+.loader {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+    color: #777;
+}
+
+.error-message {
+    background: #c61414;
+    width: 100%;
+    position: fixed;
+    top: 0px;
+    left: 0;
+    animation: slideDown 0.5s ease-out forwards;
+    z-index: 1000;
+}
+
+.error-message h1 {
+    font-size: clamp(1rem, 2.5vw, 2rem);
+    padding: 10px;
+    color: #fff;
+}
+
+/* Slide down animation */
+@keyframes slideDown {
+    0% {
+        transform: translateY(-39px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateY(0px);
+        opacity: 1;
+    }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 480px) {
+    .registration-form-moblie {
+        display: block;
+    }
+
+    .ragistrtion-book {
+        display: none;
+    }
+
+    .registration-form-moblie {
+        margin-top: 30px;
+    }
+}

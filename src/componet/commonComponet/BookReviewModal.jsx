@@ -122,7 +122,9 @@ const BookReviewModal = ({ show, onClose, book, userReview, readLater, user, del
         <>
             <div className="modal-overlay">
                 <div className="modal-content">
-                    {successMessage && <div className="success-msg"><h1>{successMessage}</h1></div>}
+                    {successMessage && <div className="success-msg">
+                        <h1>{successMessage}</h1>
+                        </div>}
                     <button className="close-btn" onClick={onClose}>✖</button>
                     <div className="book-detail">
                         <div className="book-img">

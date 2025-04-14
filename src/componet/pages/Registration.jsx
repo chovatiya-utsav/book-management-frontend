@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useNavigate } from "react-router";
 import * as Yup from 'yup';
@@ -51,7 +51,8 @@ const Registration = () => {
     const [bookCoverOpen, setBookCoverOpen] = useState(false);
     const [backBookCoverOpen, setBackBookCoverOpen] = useState(false);
     const [userInfo, setUserInfo] = useState([]);
-    const [showLoader, setShowLoader] = useState(false)
+    const [showLoader, setShowLoader] = useState(false);
+    const [ragistrtionResponse, setRagistrtionResponse] = useState("")
 
     const navigate = useNavigate();
 
@@ -138,13 +139,11 @@ const Registration = () => {
             }
 
             if (res && res.status === 409) {
-                alert(`${res?.message}`)
-                // localStorage.setItem("userExistError", JSON.stringify("You have already registered, please log in using email or contact & password."));
-                // navigate(`/Login`);
+                setRagistrtionResponse(res?.message)
+                setTimeout(() => {
+                    setRagistrtionResponse("")
+                }, 2000);
             }
-            // else {
-            //     console.error("Faild to Registration")
-            // }
 
         } catch (error) {
             setShowLoader(false)
@@ -153,21 +152,206 @@ const Registration = () => {
     }
 
     return (
-        <div className="ragistrtion-book">
-            <Formik
-                initialValues={{
-                    userName: "",
-                    userContact: "",
-                    userEmail: "",
-                    userPassword: "",
-                    userConfirmPassword: "",
-                    userAddress: "",
-                }}
-                validationSchema={validationSchema}
-                validateOnChange
-                validateOnBlur
-                onSubmit={
-                    async (values, actions) => {
+        <>
+            <div className="ragistrtion-book">
+                {
+                    ragistrtionResponse &&
+                    <div className="error-message">
+                        <h1>{ragistrtionResponse}</h1>
+                    </div>
+                }
+                <Formik
+                    initialValues={{
+                        userName: "",
+                        userContact: "",
+                        userEmail: "",
+                        userPassword: "",
+                        userConfirmPassword: "",
+                        userAddress: "",
+                    }}
+                    validationSchema={validationSchema}
+                    validateOnChange
+                    validateOnBlur
+                    onSubmit={
+                        async (values, actions) => {
+                            const data = {
+                                user_name: values?.userName,
+                                contect_no: values?.userContact,
+                                email: values?.userEmail,
+                                password: values?.userPassword,
+                                address: values?.userAddress,
+                            };
+
+                            if (data) {
+                                postRegistration(data, values)
+                            } else {
+                                console.error("Form data is required")
+                            }
+                        }
+                    }
+                >
+                    {(
+                        {
+                            values,
+                            errors,
+                            isSubmitting
+                        }) => (
+                        <Form className="Book_Body">
+                            {/* Left Arrow Button */}
+                            {
+                                bookCoverOpen ?
+                                    <button
+                                        className={`prev_button ${bookCoverOpen && !backBookCoverOpen ? "prve_button_move" : ""}`}
+                                        type="button"
+                                        onClick={() => flipPage("prev", values, errors)}
+                                    >
+                                        <i className="fa fa-arrow-circle-left"></i>
+                                    </button>
+
+                                    : null
+                            }
+
+                            {/* Book Pages */}
+                            <div
+                                className={`Book ${bookCoverOpen && !backBookCoverOpen ? "Book_move" : ""}  
+                        ${flippedPages === registrationDetails.length && backBookCoverOpen ? "Book_current_location" : ""}`}
+                            >
+                                {/* Front Book Cover */}
+                                <div className={`Book_front_cover ${bookCoverOpen ? "front_cover_opened" : "front_cover_close"}`}>
+                                    <div className="front" >
+                                        {/* <div className="front" id={!bookCoverOpen ? "p1" : "p2"}> */}
+                                        <div className="Book_Cover_front_Content">
+                                            <h1>User Registration Book</h1>
+                                            {
+                                                !values?.userName ?
+                                                    <div className="get-info-lo-rag">
+                                                        <button type="button" onClick={() => { navigate("/login") }}>
+                                                            login
+                                                        </button>
+                                                        <button type="button" onClick={() => flipPage("next", values, errors)}>
+                                                            registration
+                                                        </button>
+                                                    </div>
+                                                    : null
+
+                                            }
+                                        </div>
+                                    </div>
+                                    <div className="back">
+                                        <div className="Book_Cover_back_Content">
+                                            <h1>Fill all fields</h1>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Pages */}
+                                <div className="Book_pages">
+                                    {registrationDetails.map((item, index) => (
+                                        <div
+                                            key={index}
+                                            id={frontPageDisplay === index + 1 ? "p1" : "p2"}
+                                            className={`page ${flippedPages >= index + 1 ? "flipped" : ""}`}
+                                        >
+                                            <div className="front">
+                                                <div className="front-content">
+                                                    <div className="user_info">
+                                                        <h1>{item.detail}</h1>
+                                                    </div>
+                                                    <div className="user_info_input">
+                                                        <Field
+                                                            type={item.type}
+                                                            name={item.name}
+                                                            placeholder={item.placeholder}
+                                                            autoComplete={getAutoCompleteValue(item.name, values)}
+                                                            innerRef={(el) => (inputRefs.current[index] = el)}
+                                                        />
+                                                        <ErrorMessage name={item.name} component="span" className="error" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="back">
+                                                <div className="back-content">
+                                                    <div className="user_submitted_info">
+                                                        <h1>Submitted Details</h1>
+                                                        {Object.entries(userInfo).map(([key, value]) => (
+                                                            <div key={key} className="user_Data">
+                                                                <strong className="info_title">{key} <span>:</span></strong>
+                                                                <span className={`user_value ${key === "userPassword" || key === "userConfirmPassword" ? "Password" : null}`} > {value} </span>
+                                                            </div>
+                                                        ))}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {/* Back Book Cover */}
+                                <div className={`Book_front_cover ${!backBookCoverOpen ? "Back_cover_opened" : "Back_cover_close"}`}>
+                                    <div className="front" >
+                                        {/* <div className="front" id={!backBookCoverOpen ? "b1" : "p2"}> */}
+                                        {
+                                            registrationDetails.length === flippedPages ?
+                                                <div className="Book_Cover_front_Content">
+                                                    <h1>Check the side information you provided. If all the details are accurate, click the button below to register</h1>
+                                                    <button type="button" onClick={() => flipPage("next", values, errors)}>
+                                                        register
+                                                    </button>
+                                                </div>
+                                                : null
+                                        }
+                                    </div>
+                                    <div className="back">
+                                        <div className="Book_Cover_back_Content">
+                                            <h1>Click the 'Below' button to confirm your registration</h1>
+                                            <button type="submit"  >
+                                                confirm register
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Right Arrow Button */}
+                            {registrationDetails.length !== flippedPages ?
+                                <button
+                                    className={`next_button ${bookCoverOpen && !backBookCoverOpen ? "next_button_move" : ""}`}
+                                    type="button"
+                                    onClick={() => flipPage("next", values, errors)}
+                                >
+                                    <i className="fa fa-arrow-circle-right"></i>
+                                </button>
+                                : null
+                            }
+                        </Form>
+                    )}
+                </Formik>
+
+                {
+                    showLoader ?
+                        <Loader />
+                        : null
+                }
+            </div >
+
+            <div className="registration-form-moblie">
+                {
+                    ragistrtionResponse &&
+                    <div className="error-message">
+                        <h1>{ragistrtionResponse}</h1>
+                    </div>
+                }
+                <Formik
+                    initialValues={{
+                        userName: "",
+                        userContact: "",
+                        userEmail: "",
+                        userPassword: "",
+                        userConfirmPassword: "",
+                        userAddress: "",
+                    }}
+                    validationSchema={validationSchema}
+                    onSubmit={async (values) => {
                         const data = {
                             user_name: values?.userName,
                             contect_no: values?.userContact,
@@ -175,158 +359,63 @@ const Registration = () => {
                             password: values?.userPassword,
                             address: values?.userAddress,
                         };
+                        postRegistration(data, values);
+                    }}
+                >
+                    {({ values, errors, isSubmitting, setErrors }) => (
+                        <Form className="form">
+                            <div className="form-heading">
+                                <h1>User Registration</h1>
+                            </div>
 
-                        if (data) {
-                            postRegistration(data, values)
-                        } else {
-                            console.error("Form data is required")
-                        }
-                    }
-                }
-            >
-                {(
-                    {
-                        values,
-                        errors,
-                        isSubmitting
-                    }) => (
-                    <Form className="Book_Body">
-                        {/* Left Arrow Button */}
-                        {
-                            bookCoverOpen ?
-                                <button
-                                    className={`prev_button ${bookCoverOpen && !backBookCoverOpen ? "prve_button_move" : ""}`}
-                                    type="button"
-                                    onClick={() => flipPage("prev", values, errors)}
-                                >
-                                    <i className="fa fa-arrow-circle-left"></i>
+                            <div className="input-field">
+                                <label htmlFor="userName">User Name</label>
+                                <Field type="text" name="userName" id="userName" />
+                                <ErrorMessage name="userName" component="span" className="error" />
+                            </div>
+
+                            <div className="input-field">
+                                <label htmlFor="userContact">User Contact</label>
+                                <Field type="tel" name="userContact" id="userContact" />
+                                <ErrorMessage name="userContact" component="span" className="error" />
+                            </div>
+
+                            <div className="input-field">
+                                <label htmlFor="userEmail">User Email</label>
+                                <Field type="email" name="userEmail" id="userEmail" />
+                                <ErrorMessage name="userEmail" component="span" className="error" />
+                            </div>
+
+                            <div className="input-field">
+                                <label htmlFor="userPassword">User Password</label>
+                                <Field type="password" name="userPassword" id="userPassword" />
+                                <ErrorMessage name="userPassword" component="span" className="error" />
+                            </div>
+
+                            <div className="input-field">
+                                <label htmlFor="userConfirmPassword">Confirm Password</label>
+                                <Field type="password" name="userConfirmPassword" id="userConfirmPassword" />
+                                <ErrorMessage name="userConfirmPassword" component="span" className="error" />
+                            </div>
+
+                            <div className="input-field">
+                                <label htmlFor="userAddress">User Address</label>
+                                <Field type="text" name="userAddress" id="userAddress" />
+                                <ErrorMessage name="userAddress" component="span" className="error" />
+                            </div>
+
+                            <div className="button">
+                                <button type="submit" disabled={isSubmitting}>
+                                    {isSubmitting ? "Submitting..." : "Register"}
                                 </button>
-
-                                : null
-                        }
-
-                        {/* Book Pages */}
-                        <div
-                            className={`Book ${bookCoverOpen && !backBookCoverOpen ? "Book_move" : ""}  
-                        ${flippedPages === registrationDetails.length && backBookCoverOpen ? "Book_current_location" : ""}`}
-                        >
-                            {/* Front Book Cover */}
-                            <div className={`Book_front_cover ${bookCoverOpen ? "front_cover_opened" : "front_cover_close"}`}>
-                                <div className="front" >
-                                    {/* <div className="front" id={!bookCoverOpen ? "p1" : "p2"}> */}
-                                    <div className="Book_Cover_front_Content">
-                                        <h1>User Registration Book</h1>
-                                        {
-                                            !values?.userName ?
-                                                <div className="get-info-lo-rag">
-                                                    <button type="button" onClick={() => { navigate("/login") }}>
-                                                        login
-                                                    </button>
-                                                    <button type="button" onClick={() => flipPage("next", values, errors)}>
-                                                        registration
-                                                    </button>
-                                                </div>
-                                                : null
-
-                                        }
-                                    </div>
-                                </div>
-                                <div className="back">
-                                    <div className="Book_Cover_back_Content">
-                                        <h1>Fill all fields</h1>
-                                    </div>
-                                </div>
                             </div>
+                        </Form>
+                    )}
+                </Formik>
 
-                            {/* Pages */}
-                            <div className="Book_pages">
-                                {registrationDetails.map((item, index) => (
-                                    <div
-                                        key={index}
-                                        id={frontPageDisplay === index + 1 ? "p1" : "p2"}
-                                        className={`page ${flippedPages >= index + 1 ? "flipped" : ""}`}
-                                    >
-                                        <div className="front">
-                                            <div className="front-content">
-                                                <div className="user_info">
-                                                    <h1>{item.detail}</h1>
-                                                </div>
-                                                <div className="user_info_input">
-                                                    <Field
-                                                        type={item.type}
-                                                        name={item.name}
-                                                        placeholder={item.placeholder}
-                                                        autoComplete={getAutoCompleteValue(item.name, values)}
-                                                        innerRef={(el) => (inputRefs.current[index] = el)}
-                                                    />
-                                                    <ErrorMessage name={item.name} component="span" className="error" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="back">
-                                            <div className="back-content">
-                                                <div className="user_submitted_info">
-                                                    <h1>Submitted Details</h1>
-                                                    {Object.entries(userInfo).map(([key, value]) => (
-                                                        <div key={key} className="user_Data">
-                                                            <strong className="info_title">{key} <span>:</span></strong>
-                                                            <span className={`user_value ${key === "userPassword" || key === "userConfirmPassword" ? "Password" : null}`} > {value} </span>
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
-
-                            {/* Back Book Cover */}
-                            <div className={`Book_front_cover ${!backBookCoverOpen ? "Back_cover_opened" : "Back_cover_close"}`}>
-                                <div className="front" >
-                                    {/* <div className="front" id={!backBookCoverOpen ? "b1" : "p2"}> */}
-                                    {
-                                        registrationDetails.length === flippedPages ?
-                                            <div className="Book_Cover_front_Content">
-                                                <h1>Check the side information you provided. If all the details are accurate, click the button below to register</h1>
-                                                <button type="button" onClick={() => flipPage("next", values, errors)}>
-                                                    register
-                                                </button>
-                                            </div>
-                                            : null
-                                    }
-                                </div>
-                                <div className="back">
-                                    <div className="Book_Cover_back_Content">
-                                        <h1>Click the 'Below' button to confirm your registration</h1>
-                                        <button type="submit"  >
-                                            confirm register
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Right Arrow Button */}
-                        {registrationDetails.length !== flippedPages ?
-                            <button
-                                className={`next_button ${bookCoverOpen && !backBookCoverOpen ? "next_button_move" : ""}`}
-                                type="button"
-                                onClick={() => flipPage("next", values, errors)}
-                            >
-                                <i className="fa fa-arrow-circle-right"></i>
-                            </button>
-                            : null
-                        }
-                    </Form>
-                )}
-            </Formik>
-
-            {
-                showLoader ?
-                    <Loader />
-                    : null
-            }
-        </div >
+                {showLoader && <Loader />}
+            </div>
+        </>
     );
 };
 
