@@ -398,7 +398,7 @@
     .book-slider-container .book-slider {
         inset: 0;
         border-radius: 0;
-        margin-top: 31px;
+        margin: 22px 0px;
     }
 
     .book-slider-container .book-slider .slides .content .author-info img {
@@ -468,7 +468,7 @@
 
 
     .book-slider-container .button {
-        bottom: 33%;
+        bottom: 38%;
     }
 
     .book-slider-container .book-slider .slides.active.expanded {

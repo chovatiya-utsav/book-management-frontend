@@ -65,8 +65,9 @@ const Header = () => {
     const userAdminLogin = localStorage.getItem('userAdminLogin') || "";
 
     const toggleProfileModal = () => {
-        setIsProfileOpen(!isProfileOpen)
-        setUserProfileUpdate(false)
+        setMenuOpen(false);
+        setIsProfileOpen(!isProfileOpen);
+        setUserProfileUpdate(false);
     };
 
     const getInitial = (name) => name?.charAt(0)?.toUpperCase() || '';
@@ -197,7 +198,7 @@ const Header = () => {
 
                         <li>
                             {location.pathname !== "/UserProfile" && !userAdminLogin && (
-                                <div className="profile-avatar" onClick={toggleProfileModal}>
+                                <div className="profile-avatar" onClick={toggleProfileModal} >
                                     {getInitial(user?.name)}
                                 </div>
                             )}

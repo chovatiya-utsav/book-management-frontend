@@ -182,6 +182,7 @@
     height: 100%;
     background: #fff;
     left: 0;
+    width: 100%;
 }
 
 .header .profile-modal .profile-content .user-profile-update {
@@ -390,5 +391,12 @@
     to {
         transform: translateY(0);
         opacity: 1;
+    }
+}
+
+
+@media only screen and (max-width: 480px) {
+    .header .profile-modal .profile-content {
+        max-width: 350px;
     }
 }
